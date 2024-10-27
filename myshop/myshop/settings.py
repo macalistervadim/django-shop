@@ -1,10 +1,10 @@
 import os
-
 from pathlib import Path
 
 import dotenv
 
 dotenv.load_dotenv()
+
 
 def load_bool(key: str, default: str | bool) -> bool:
     value = os.getenv(key=key, default=str(default)).lower()
@@ -13,6 +13,7 @@ def load_bool(key: str, default: str | bool) -> bool:
 
 def load_list(key: str, default: str | bool) -> list[str]:
     return os.getenv(key=key, default=str(default)).split(",")
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -67,7 +68,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-    }
+    },
 }
 
 AUTH_PASSWORD_VALIDATORS = [

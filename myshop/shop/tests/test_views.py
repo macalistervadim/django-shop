@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
-from django.test import TestCase
 import django.shortcuts
+from django.test import TestCase
 
 import shop.models
 
@@ -25,17 +25,26 @@ class TestProductListView(TestCase):
         self.assertTemplateUsed(response, "shop/product/list.html")
         self.assertIn("categories", response.context)
         self.assertIn("products", response.context)
-        self.assertEqual(response.context["products"][0].name, self.product.name)
+        self.assertEqual(
+            response.context["products"][0].name,
+            self.product.name,
+        )
 
     def test_product_list_view_with_category(self):
-        url = django.shortcuts.reverse("shop:product_list_by_category", kwargs={"category_slug": "tea"})
+        url = django.shortcuts.reverse(
+            "shop:product_list_by_category",
+            kwargs={"category_slug": "tea"},
+        )
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, "shop/product/list.html")
         self.assertEqual(response.context["category"], self.category)
         self.assertEqual(len(response.context["products"]), 1)
-        self.assertEqual(response.context["products"][0].name, self.product.name)
+        self.assertEqual(
+            response.context["products"][0].name,
+            self.product.name,
+        )
 
 
 class TestProductDetailView(TestCase):
@@ -50,7 +59,10 @@ class TestProductDetailView(TestCase):
         )
 
     def test_product_detail_view_valid(self):
-        url = django.shortcuts.reverse("shop:product_detail", kwargs={"id": self.product.id, "slug": self.product.slug})
+        url = django.shortcuts.reverse(
+            "shop:product_detail",
+            kwargs={"id": self.product.id, "slug": self.product.slug},
+        )
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -58,8 +70,10 @@ class TestProductDetailView(TestCase):
         self.assertEqual(response.context["product"].name, self.product.name)
 
     def test_product_detail_view_invalid_data(self):
-        url = django.shortcuts.reverse("shop:product_detail", kwargs={"id": 99999999, "slug": "invalid"})
+        url = django.shortcuts.reverse(
+            "shop:product_detail",
+            kwargs={"id": 99999999, "slug": "invalid"},
+        )
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
-

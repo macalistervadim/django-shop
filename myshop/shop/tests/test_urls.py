@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
-from django.test import TestCase
 import django.shortcuts
+from django.test import TestCase
 
 import shop.models
 
@@ -20,13 +20,19 @@ class TestProductListWithSlugUrls(TestCase):
             name="Tea",
         )
 
-        url = django.shortcuts.reverse("shop:product_list_by_category", args=[category.slug])
+        url = django.shortcuts.reverse(
+            "shop:product_list_by_category",
+            args=[category.slug],
+        )
         request = self.client.get(url)
 
         self.assertEqual(request.status_code, HTTPStatus.OK)
 
     def test_product_list_with_slug_url_invalid_slug(self):
-        url = django.shortcuts.reverse("shop:product_list_by_category", args=["invalid"])
+        url = django.shortcuts.reverse(
+            "shop:product_list_by_category",
+            args=["invalid"],
+        )
         request = self.client.get(url)
 
         self.assertEqual(request.status_code, HTTPStatus.NOT_FOUND)
@@ -44,15 +50,19 @@ class TestProductDetailUrls(TestCase):
             name="Yellow tea",
             price=10,
         )
-        url = django.shortcuts.reverse("shop:product_detail", args=[product.id, product.slug])
+        url = django.shortcuts.reverse(
+            "shop:product_detail",
+            args=[product.id, product.slug],
+        )
         request = self.client.get(url)
 
         self.assertEqual(request.status_code, HTTPStatus.OK)
 
     def test_product_detail_url_invalid_data(self):
-        url = django.shortcuts.reverse("shop:product_detail", args=[9999999, "invalid"])
+        url = django.shortcuts.reverse(
+            "shop:product_detail",
+            args=[9999999, "invalid"],
+        )
         request = self.client.get(url)
 
         self.assertEqual(request.status_code, HTTPStatus.NOT_FOUND)
-
-

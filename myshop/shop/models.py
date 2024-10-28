@@ -1,7 +1,7 @@
 from typing import Any
 
-import django.shortcuts
 from django.db import models
+import django.shortcuts
 from django.utils.text import slugify
 
 import core.models
@@ -37,7 +37,7 @@ class Category(core.models.AbstractBaseModel):
     def get_absolute_url(self) -> str:
         return django.shortcuts.reverse(
             "shop:product_list_by_category",
-            args=[self.slug]
+            args=[self.slug],
         )
 
 
@@ -87,5 +87,5 @@ class Product(core.models.AbstractBaseModel):
     def get_absolute_url(self) -> str:
         return django.shortcuts.reverse(
             "shop:product_detail",
-            args=[self.id, self.slug]
+            args=[self.id, self.slug],
         )

@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import dotenv
+from django.conf.global_settings import MEDIA_URL, MEDIA_ROOT
 
 dotenv.load_dotenv()
 
@@ -108,3 +109,6 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"

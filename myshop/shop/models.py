@@ -73,6 +73,7 @@ class Product(core.models.AbstractBaseModel):
             f"slug={self.slug!r}, "
             f"image={self.image!r}, "
             f"price={self.price!r}, "
+            f"description={self.description!r}, "
             f"available={self.available!r})"
             f"created={self.created!r}, "
             f"updated={self.updated!r})"

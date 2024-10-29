@@ -1,5 +1,6 @@
 import django.shortcuts
 
+import cart.forms
 import shop.models
 
 
@@ -29,9 +30,10 @@ def product_detail(request, id, slug):
         slug=slug,
         available=True,
     )
+    cart_product_form = cart.forms.CartAddProductForm()
 
     return django.shortcuts.render(
         request,
         "shop/product/detail.html",
-        {"product": product},
+        {"product": product, "cart_product_form": cart_product_form},
     )

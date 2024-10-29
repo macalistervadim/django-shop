@@ -8,10 +8,12 @@ from shop.models import Product
 
 # TODO: Тесты!
 
+
 class Cart:
     """
     Класс корзины покупок посредством джанго-сессий
     """
+
     def __init__(self, request: HttpRequest) -> None:
         """
         Инициализируем корзину покупок клиента.
@@ -22,13 +24,21 @@ class Cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
-    def add(self, product: Any, quantity: int = 1, override_quantity: bool = False) -> None:
+    def add(
+        self,
+        product: Any,
+        quantity: int = 1,
+        override_quantity: bool = False,
+    ) -> None:
         """
         Добавление товара в корзину либо обновление его кол-ва
         """
         product_id = str(product.id)
         if product_id not in self.cart:
-            self.cart[product_id] = {"quantity": 0, "price": str(product.price)}
+            self.cart[product_id] = {
+                "quantity": 0,
+                "price": str(product.price),
+            }
 
         if override_quantity:
             self.cart[product_id]["quantity"] = quantity
@@ -72,7 +82,10 @@ class Cart:
         return sum(item["quantity"] for item in self.cart.values())
 
     def get_total_price(self) -> int:
-        return sum(Decimal(item["price"] * item["quantity"]) for item in self.cart.values())
+        return sum(
+            Decimal(item["price"] * item["quantity"])
+            for item in self.cart.values()
+        )
 
     def clear(self) -> None:
         """

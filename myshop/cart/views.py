@@ -1,4 +1,5 @@
 import django.shortcuts
+from django.utils.timezone import override
 from django.views.decorators.http import require_POST
 
 from cart.cart import Cart
@@ -39,6 +40,10 @@ def cart_remove(request, product_id):
 
 def cart_detail(request):
     cart_ = Cart(request)
+    for item in cart_:
+        item["update_quantity_form"] = cart.forms.CartAddProductForm(
+            initial={"quantity": item["quantity"], "override": True}
+        ) #  todo: написать тесты
     return django.shortcuts.render(
         request,
         "cart/detail.html",

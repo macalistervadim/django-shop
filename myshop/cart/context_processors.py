@@ -4,4 +4,4 @@ from cart.cart import Cart
 
 
 def cart(request: HttpRequest) -> dict[str, Cart]:
-    return {'cart': Cart(request)} #  todo: написать тесты
+    return {"cart": Cart(request)}

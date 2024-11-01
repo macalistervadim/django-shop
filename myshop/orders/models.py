@@ -4,7 +4,6 @@ import core.models
 from shop.models import Product
 
 
-#  todo: test!
 class Order(core.models.AbstractBaseModel):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)

@@ -6,7 +6,6 @@ import orders.forms
 import orders.models
 
 
-# todo: test
 def order_create(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
     if request.method == "POST":

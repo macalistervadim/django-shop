@@ -6,8 +6,6 @@ from django.http import HttpRequest
 
 from shop.models import Product
 
-# TODO: Тесты!
-
 
 class Cart:
     """

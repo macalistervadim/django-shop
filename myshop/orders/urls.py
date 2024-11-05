@@ -10,5 +10,5 @@ urlpatterns = [
         "create/",
         orders.views.order_create,
         name="order_create",
-    ),  # todo: test
+    ),
 ]

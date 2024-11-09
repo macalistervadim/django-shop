@@ -4,6 +4,7 @@ import django.shortcuts
 from cart.cart import Cart
 import orders.forms
 import orders.models
+from orders.tasks import order_created
 
 
 def order_create(request: HttpRequest) -> HttpResponse:
@@ -20,6 +21,7 @@ def order_create(request: HttpRequest) -> HttpResponse:
                     quantity=item["quantity"],
                 )
             cart.clear()
+            order_created.delay(order.id)  # запустить асинхронное задание
 
             return django.shortcuts.render(
                 request,

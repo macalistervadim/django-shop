@@ -23,10 +23,9 @@ def order_create(request: HttpRequest) -> HttpResponse:
             cart.clear()
             order_created.delay(order.id)  # запустить асинхронное задание
 
-            return django.shortcuts.render(
-                request,
-                "orders/order/created.html",
-                {"order": order},
+            request.session["order_id"] = order.id  # задать заказ в сеансе
+            return django.shortcuts.redirect(
+                django.shortcuts.reverse("payment:process"),
             )
     else:
         form = orders.forms.OrderCreateForm()

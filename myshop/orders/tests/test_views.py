@@ -48,8 +48,7 @@ class TestOrderCreateView(TestCase):
         }
         response = self.client.post(url, data=post_data)
 
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertTemplateUsed(response, "orders/order/created.html")
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
         order = Order.objects.get(email="johndoe@example.com")
         self.assertEqual(order.first_name, "John")

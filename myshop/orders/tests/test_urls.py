@@ -23,4 +23,4 @@ class TestOrderCreateUrls(TestCase):
         }
         request = self.client.post(url, data=data)
 
-        self.assertEqual(request.status_code, http.HTTPStatus.OK)
+        self.assertEqual(request.status_code, http.HTTPStatus.FOUND)

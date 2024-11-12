@@ -76,3 +76,8 @@ To get started with the project, you'll need to copy the `.env.example` file and
 
     # Other environment variables...
     ```
+
+## ER Diagram
+Here is a visual ER diagram of the existing project database
+
+![ER Diagram](ER.png)

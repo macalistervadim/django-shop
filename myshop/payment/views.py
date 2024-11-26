@@ -57,9 +57,6 @@ def payment_process(request: HttpRequest) -> HttpResponse:
         )
 
 
-# todo: test
-
-
 def payment_completed(request: HttpRequest) -> HttpResponse:
     return django.shortcuts.render(request, "payment/completed.html")
 

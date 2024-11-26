@@ -4,7 +4,6 @@ from django.core.mail import send_mail
 import orders.models
 
 
-# todo: test
 @shared_task
 def order_created(order_id):
     """

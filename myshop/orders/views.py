@@ -40,7 +40,13 @@ def order_create(request: HttpRequest) -> HttpResponse:
 
 @staff_member_required
 def admin_order_detail(request: HttpRequest, order_id: int) -> HttpResponse:
-    order = django.shortcuts.get_object_or_404(orders.models.Order, id=order_id)
+    order = django.shortcuts.get_object_or_404(
+        orders.models.Order,
+        id=order_id,
+    )
 
-    return django.shortcuts.render(request,
-    "admin/orders/order/detail.html", {"order": order})
+    return django.shortcuts.render(
+        request,
+        "admin/orders/order/detail.html",
+        {"order": order},
+    )

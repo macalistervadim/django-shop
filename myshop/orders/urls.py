@@ -11,5 +11,9 @@ urlpatterns = [
         orders.views.order_create,
         name="order_create",
     ),
-    path("admin/order/<int:order_id>/", orders.views.admin_order_detail, name="admin_order_detail"),
+    path(
+        "admin/order/<int:order_id>/",
+        orders.views.admin_order_detail,
+        name="admin_order_detail",
+    ),
 ]

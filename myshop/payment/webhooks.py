@@ -33,6 +33,7 @@ def stripe_webhook(request):
             except Order.DoesNotExit:
                 return HttpResponse(status=400)
             order.paid = True
+            order.stripe_id = session.payment_intent
             order.save()
 
     return HttpResponse(status=200)

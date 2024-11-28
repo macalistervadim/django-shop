@@ -1,3 +1,4 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpRequest, HttpResponse
 import django.shortcuts
 
@@ -35,3 +36,11 @@ def order_create(request: HttpRequest) -> HttpResponse:
         "orders/order/create.html",
         {"form": form, "cart": cart},
     )
+
+
+@staff_member_required
+def admin_order_detail(request: HttpRequest, order_id: int) -> HttpResponse:
+    order = django.shortcuts.get_object_or_404(orders.models.Order, id=order_id)
+
+    return django.shortcuts.render(request,
+    "admin/orders/order/detail.html", {"order": order})

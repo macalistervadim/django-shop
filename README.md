@@ -16,11 +16,13 @@ Open your terminal.
 8. Create a `.env` file in the root of your project and define your environment variables (see below for example variables)
 9. Run RabbitMQ in Docker:
 To install and start RabbitMQ locally using Docker, use the following command in docker-console: `docker run -it --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management`
-10. Run Celery: To run Celery locally using Docker, use the following command in console `poetry run celery -A myshop worker -l info`
-11. Run the development server with HTTPS: To run the server with HTTPS, use the following command:
-`python3 manage.py runserver_plus --cert-file cert.crt --key-file key.key`
-Replace cert.crt and key.key with the paths to your SSL certificate and private key files.
-2Access the app at https://127.0.0.1:8000/ in your browser.
+10. Run Celery: To run Celery locally using Docker, use the following command in console: `poetry run celery -A myshop worker -l info`
+11. Create your own application in Stripe and enter the webhook secret you need to specify in secrets (env): https://docs.stripe.com/webhooks/quickstart
+12. It is also necessary to install the stripe library using the documentation in point 11 and start working with it using the stripe login command, completing all the necessary operations
+13. Enable stripe webhook listening: `stripe listen --forward-to localhost:8000/payment/webhook/`
+14. Run the development server with HTTP:
+`python3 manage.py runserver`
+15. Access the app at http://127.0.0.1:8000/ in your browser.
 
 # Important note
 Please note that all the following points below are executed strictly in the base directory of the project, in which you have compiled the repository earlier in the paragraph above

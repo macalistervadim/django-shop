@@ -1,3 +1,4 @@
+from django.http import HttpRequest, HttpResponse
 import django.shortcuts
 from django.views.decorators.http import require_POST
 
@@ -8,7 +9,7 @@ import shop.models
 
 
 @require_POST
-def cart_add(request, product_id):
+def cart_add(request: HttpRequest, product_id: int) -> HttpResponse:
     cart_ = Cart(request)
     product = django.shortcuts.get_object_or_404(
         shop.models.Product,
@@ -27,7 +28,7 @@ def cart_add(request, product_id):
 
 
 @require_POST
-def cart_remove(request, product_id):
+def cart_remove(request: HttpRequest, product_id: int) -> HttpResponse:
     cart_ = Cart(request)
     product = django.shortcuts.get_object_or_404(
         shop.models.Product,
@@ -38,7 +39,7 @@ def cart_remove(request, product_id):
     return django.shortcuts.redirect("cart:cart_detail")
 
 
-def cart_detail(request):
+def cart_detail(request: HttpRequest) -> HttpResponse:
     cart_ = Cart(request)
     for item in cart_:
         item["update_quantity_form"] = cart.forms.CartAddProductForm(

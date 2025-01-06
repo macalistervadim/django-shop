@@ -1,10 +1,16 @@
+from typing import Any
+
+from django.http import HttpRequest, HttpResponse
 import django.shortcuts
 
 import cart.forms
 import shop.models
 
 
-def product_list(request, category_slug=None):
+def product_list(
+    request: HttpRequest,
+    category_slug: Any = None,
+) -> HttpResponse:
     category = None
     categories = shop.models.Category.objects.all()
     products = shop.models.Product.objects.filter(available=True)
@@ -23,7 +29,7 @@ def product_list(request, category_slug=None):
     )
 
 
-def product_detail(request, id, slug):
+def product_detail(request: HttpRequest, id: int, slug: Any) -> HttpResponse:
     product = django.shortcuts.get_object_or_404(
         shop.models.Product,
         id=id,

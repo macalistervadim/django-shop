@@ -1,8 +1,10 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
+import core.models
 
-class Coupon(models.Model):
+
+class Coupon(core.models.AbstractBaseModel):
     code = models.CharField(max_length=50, unique=True)
     valid_from = models.DateTimeField()
     valid_to = models.DateTimeField()

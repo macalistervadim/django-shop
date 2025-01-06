@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import stripe
 
@@ -7,7 +7,7 @@ from orders.models import Order
 
 
 @csrf_exempt
-def stripe_webhook(request):
+def stripe_webhook(request: HttpRequest) -> HttpResponse:
     payload = request.body
     sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
     event = None

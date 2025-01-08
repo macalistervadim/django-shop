@@ -5,6 +5,7 @@ import django.shortcuts
 
 import cart.forms
 import shop.models
+from shop.recommender import Recommender
 
 
 def product_list(
@@ -37,9 +38,15 @@ def product_detail(request: HttpRequest, id: int, slug: Any) -> HttpResponse:
         available=True,
     )
     cart_product_form = cart.forms.CartAddProductForm()
+    r = Recommender()
+    recommended_products = r.suggest_products_for([product])
 
     return django.shortcuts.render(
         request,
         "shop/product/detail.html",
-        {"product": product, "cart_product_form": cart_product_form},
+        {
+            "product": product,
+            "cart_product_form": cart_product_form,
+            "recommended_products": recommended_products,
+        },
     )

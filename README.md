@@ -20,9 +20,10 @@ To install and start RabbitMQ locally using Docker, use the following command in
 11. Create your own application in Stripe and enter the webhook secret you need to specify in secrets (env): https://docs.stripe.com/webhooks/quickstart
 12. It is also necessary to install the stripe library using the documentation in point 11 and start working with it using the stripe login command, completing all the necessary operations
 13. Enable stripe webhook listening: `stripe listen --forward-to localhost:8000/payment/webhook/`
-14. Run the development server with HTTP:
+14. Run redis: `docker run -it --name redis -p 6379:6379 redis`
+15. Run the development server with HTTP:
 `python3 manage.py runserver`
-15. Access the app at http://127.0.0.1:8000/ in your browser.
+16. Access the app at http://127.0.0.1:8000/ in your browser.
 
 # Important note
 Please note that all the following points below are executed strictly in the base directory of the project, in which you have compiled the repository earlier in the paragraph above

@@ -25,7 +25,7 @@ def coupon_apply(request: HttpRequest) -> HttpResponse:
             messages.success(request, "Coupon successfully activated.")
         except coupons.models.Coupon.DoesNotExist:
             request.session["coupon_id"] = (
-                None  # TODO: здесь надо добавить мол если промо уже был - то запоминть его и не заменять на NONE
+                None
             )
             messages.error(request, "Coupon not found.")
     return redirect("cart:cart_detail")

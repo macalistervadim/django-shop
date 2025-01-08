@@ -13,7 +13,11 @@ def order_create(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = orders.forms.OrderCreateForm(request.POST)
         if form.is_valid():
-            order = form.save()
+            order = form.save(commit=False)
+            if cart.coupon:
+                order.coupon = cart.coupon
+                order.discount = cart.coupon.discount
+            order.save()
             for item in cart:
                 orders.models.OrderItem.objects.create(
                     order=order,

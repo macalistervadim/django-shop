@@ -1,9 +1,12 @@
 from django import forms
+from localflavor.us.models import USZipCodeField
 
 import orders.models
 
 
 class OrderCreateForm(forms.ModelForm):
+    postal_code = USZipCodeField()
+
     class Meta:
         model = orders.models.Order
         fields = [

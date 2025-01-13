@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-09 15:45+0600\n"
+"POT-Creation-Date: 2025-01-10 13:14+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,30 +17,60 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: orders/models.py:14
 msgid "first name"
 msgstr ""
 
-#: orders/models.py:16
+#: orders/models.py:15
 msgid "last name"
 msgstr ""
 
-#: orders/models.py:18
+#: orders/models.py:16
 msgid "e-mail"
 msgstr ""
 
-#: orders/models.py:19
+#: orders/models.py:17
 msgid "address"
 msgstr ""
 
-#: orders/models.py:21
+#: orders/models.py:18
 msgid "postal code"
 msgstr ""
 
-#: orders/models.py:23
+#: orders/models.py:19
 msgid "city"
 msgstr ""
 
-#: orders/models.py:25
+#: orders/models.py:20
 msgid "paid"
+msgstr ""
+
+#: orders/templates/orders/order/create.html:4
+#: orders/templates/orders/order/create.html:7
+msgid "Checkout"
+msgstr ""
+
+#: orders/templates/orders/order/create.html:9
+msgid "Your order"
+msgstr ""
+
+#: orders/templates/orders/order/create.html:19
+#, python-format
+msgid ""
+"\n"
+"          \t\"%(code)s\" (%(discount)s%% off)\n"
+"          "
+msgstr ""
+
+#: orders/templates/orders/order/create.html:26
+msgid "Total"
+msgstr ""
+
+#: orders/templates/orders/order/create.html:30
+msgid "Place order"
+msgstr ""
+
+#: orders/urls.py:11
+msgid "create/"
 msgstr ""

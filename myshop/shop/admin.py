@@ -1,21 +1,22 @@
 from django.contrib import admin
+from parler.admin import TranslatableAdmin
 
 import shop.models as models
 
 
 @admin.register(models.Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(TranslatableAdmin):
     list_display = [
         models.Category.name.field.name,
         models.Category.slug.field.name,
     ]
-    prepopulated_fields = {
-        models.Category.slug.field.name: (models.Category.name.field.name,),
-    }
+
+    def get_prepopulated_fields(self, request, obj=None):
+        return {"slug": ("name",)}
 
 
 @admin.register(models.Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(TranslatableAdmin):
     list_display = [
         models.Product.name.field.name,
         models.Product.slug.field.name,
@@ -33,6 +34,6 @@ class ProductAdmin(admin.ModelAdmin):
         models.Product.price.field.name,
         models.Product.available.field.name,
     ]
-    prepopulated_fields = {
-        models.Product.slug.field.name: (models.Product.name.field.name,),
-    }
+
+    def get_prepopulated_fields(self, request, obj=None):
+        return {"slug": ("name",)}

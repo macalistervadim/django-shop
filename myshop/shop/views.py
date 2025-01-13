@@ -17,9 +17,11 @@ def product_list(
     products = shop.models.Product.objects.filter(available=True)
 
     if category_slug:
+        language = request.LANGUAGE_CODE
         category = django.shortcuts.get_object_or_404(
             shop.models.Category,
-            slug=category_slug,
+            translations__language_code=language,
+            translations__slug=category_slug,
         )
         products = products.filter(category=category)
 
@@ -31,10 +33,12 @@ def product_list(
 
 
 def product_detail(request: HttpRequest, id: int, slug: Any) -> HttpResponse:
+    language = request.LANGUAGE_CODE
     product = django.shortcuts.get_object_or_404(
         shop.models.Product,
         id=id,
-        slug=slug,
+        translations__language_code=language,
+        translations__slug=slug,
         available=True,
     )
     cart_product_form = cart.forms.CartAddProductForm()

@@ -1,91 +1,103 @@
-from typing import Any
-
 from django.db import models
 import django.shortcuts
+import django.urls
 from django.utils.text import slugify
+from parler.models import TranslatableModel, TranslatedFields
 
-import core.models
 
-
-class Category(core.models.AbstractBaseModel):
-    name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, unique=True)
+class Category(TranslatableModel):
+    translations = TranslatedFields(
+        name=models.CharField(max_length=200),
+        slug=models.SlugField(max_length=200, unique=True),
+    )
 
     class Meta:
-        ordering = ["name"]
-        indexes = [
-            models.Index(fields=["name"]),
-        ]
         verbose_name = "category"
         verbose_name_plural = "categories"
 
-    def __str__(self) -> models.CharField:
-        return self.name
+    def __str__(self) -> str:
+        return (
+            self.safe_translation_getter("name", any_language=True)
+            or "Unnamed Category"
+        )
 
     def __repr__(self) -> str:
         return (
             f"{self.__class__.__name__}("
-            f"name={self.name!r}, "
+            f"name={self.safe_translation_getter(
+                'name', any_language=True)!r}, "
             f"slug={self.slug!r})"
         )
 
-    def save(self, *args: Any, **kwargs: Any) -> None:
+    def save(self, *args, **kwargs) -> None:
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(
+                self.safe_translation_getter("name", any_language=True),
+            )
         super().save(*args, **kwargs)
 
     def get_absolute_url(self) -> str:
-        return django.shortcuts.reverse(
+        return django.urls.reverse(
             "shop:product_list_by_category",
             args=[self.slug],
         )
 
 
-class Product(core.models.AbstractBaseModel):
+class Product(TranslatableModel):
+    translations = TranslatedFields(
+        name=models.CharField(max_length=200),
+        slug=models.SlugField(max_length=200, unique=True),
+        description=models.TextField(blank=True),
+    )
     category = models.ForeignKey(
-        Category,
+        "Category",
         related_name="products",
         on_delete=models.CASCADE,
     )
-    name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200)
     image = models.ImageField(upload_to="media/products/%Y/%m/%d", blank=True)
-    description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["name"]
         indexes = [
-            models.Index(fields=["id", "slug"]),
-            models.Index(fields=["name"]),
             models.Index(fields=["-created"]),
         ]
 
-    def __str__(self) -> models.CharField:
-        return self.name
+    def __str__(self) -> str:
+        return (
+            self.safe_translation_getter("name", any_language=True)
+            or "Unnamed Product"
+        )
 
     def __repr__(self) -> str:
         return (
             f"{self.__class__.__name__}("
             f"category={self.category!r}, "
-            f"name={self.name!r}, "
-            f"slug={self.slug!r}, "
+            f"name={self.safe_translation_getter(
+                'name', any_language=True)!r}, "
+            f"slug={self.safe_translation_getter(
+                'slug', any_language=True)!r}, "
             f"image={self.image!r}, "
             f"price={self.price!r}, "
-            f"description={self.description!r}, "
+            f"description={self.safe_translation_getter(
+                'description', any_language=True)!r}, "
             f"available={self.available!r})"
-            f"created={self.created!r}, "
-            f"updated={self.updated!r})"
         )
 
-    def save(self, *args: Any, **kwargs: Any) -> None:
+    def save(self, *args, **kwargs) -> None:
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(
+                self.safe_translation_getter("name", any_language=True),
+            )
         super().save(*args, **kwargs)
 
     def get_absolute_url(self) -> str:
-        return django.shortcuts.reverse(
+        return django.urls.reverse(
             "shop:product_detail",
-            args=[self.id, self.slug],
+            args=[
+                self.id,
+                self.safe_translation_getter("slug", any_language=True),
+            ],
         )
